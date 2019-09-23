@@ -14,9 +14,13 @@ django-cors-headers = "*"
 gunicorn = "*"
 django-heroku = "*"
 django-rest-api = "*"
-psycopg2-binary = "~=2.8.3"
+psycopg2-binary = "*"
+dj-database-url = "*"
+whitenoise = "*"
 
 [dev-packages]
+autopep8 = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"
