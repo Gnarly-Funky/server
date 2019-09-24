@@ -1,4 +1,5 @@
 import random
+import json
 
 
 class Rectangle:
@@ -7,6 +8,10 @@ class Rectangle:
         self.y = y
         self.w = w
         self.h = h
+        self.nNeighbors = []
+        self.sNeighbors = []
+        self.eNeighbors = []
+        self.wNeighbors = []
 
 
 class BigMap:
@@ -17,6 +22,7 @@ class BigMap:
         self.maxSize = maxSize
         self.RoomList = [Rectangle(0, 0, self.W, self.H)]
         self.minRooms = minRooms
+        self.worldArray = [[' ' for i in range(self.W)] for j in range(self.H)]
 
     def buildWorld(self):
         for index, rect in enumerate(self.RoomList):
@@ -36,22 +42,42 @@ class BigMap:
                 rect2 = Rectangle(rect.x + wSplit, rect.y,
                                   rect.w - wSplit, hSplit)
                 self.RoomList.append(rect2)
+
                 rect3 = Rectangle(rect.x, rect.y + hSplit,
                                   wSplit, rect.h-hSplit)
                 self.RoomList.append(rect3)
                 rect4 = Rectangle(rect.x + wSplit, rect.y + hSplit,
                                   rect.w - wSplit, rect.h-hSplit)
                 self.RoomList.append(rect4)
+                # update neighbors
+                rect1.eNeighbors.append(rect2)
+                rect1.sNeighbors.append(rect3)
+                rect2.wNeighbors.append(rect1)
+                rect2.sNeighbors.append(rect4)
+                rect3.nNeighbors.append(rect1)
+                rect3.eNeighbors.append(rect4)
+                rect4.wNeighbors.append(rect3)
+                rect4.nNeighbors.append(rect2)
                 # remove original rect from the list
                 del self.RoomList[index]
         if len(self.RoomList) < self.minRooms:
             self.buildWorld()
-        count = 0
+
         for room in self.RoomList:
-            count += 1
-            print(f"{count} x: {room.x}, y: {room.y}, w: {room.w}, h: {room.h}")
+            for i in range(room.x, room.x + room.w):
+                self.worldArray[i][room.y] = '#'
+                self.worldArray[i][room.y+room.h - 1] = "#"
+            for j in range(room.y, room.y + room.h):
+                self.worldArray[room.x][j] = "#"
+                self.worldArray[room.x + room.w - 1][j] = "#"
+
+        return self.RoomList
+
+#         print('\n'.join([''.join(['{:2}'.format(item)
+#                                   for item in row])for row in self.worldArray]))
+#         print(len(self.RoomList))
 
 
-map = BigMap(1024, 1024, 10, 16, 500)
+# map = BigMap(64, 64, 5, 10, 30)
 
-map.buildWorld()
+# map.buildWorld()
