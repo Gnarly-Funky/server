@@ -2,7 +2,7 @@
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 
-![Django](https://img.shields.io/badge/Django-2.2.5-orange) ![Django REST Framework](https://img.shields.io/badge/djangorestframework-3.10.3-brightgreen)
+![Django](https://img.shields.io/badge/Django-2.2.5-orange) ![Django REST Framework](https://img.shields.io/badge/djangorestframework-3.10.3-brightgreen) ![django-allauth](https://img.shields.io/badge/django--allauth-0.40.0-red) ![python-decouple](https://img.shields.io/badge/python--decouple-3.1-yellow) ![Psycopg2-Binary](https://img.shields.io/badge/psycopg2-2.8.3-lightgrey) ![whitenoise](https://img.shields.io/badge/whitenoise-4.1.4-red) ![django-rest-auth](https://img.shields.io/badge/django--rest--auth-0.9.4-yellowgreen) ![gunicorn](https://img.shields.io/badge/gunicorn-19.9.0-blue) ![Django-Heroku](https://img.shields.io/badge/Django--Heroku-0.3.0-brightgreen)
 
 # GNARLY FUNKY SERVER
 
