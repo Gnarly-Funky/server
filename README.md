@@ -28,7 +28,7 @@ This repository contains the server for the Gnarly Funky build week team. This D
 
 ## TECHNOLOGY STACK
 
-The core dependencies were as follows:
+The core dependencies are as follows:
 
 1. [django](https://www.djangoproject.com/)
 2. [djangorestframework](https://www.django-rest-framework.org/)
