@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from .models import *
 from rest_framework.decorators import api_view
 import json
-from make_grid import Rectangle, BigMap
 
 # instantiate pusher
 # pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
@@ -28,8 +27,6 @@ def initialize(request):
 @csrf_exempt
 @api_view(["GET"])
 def get_world(request):
-    map = BigMap(1024, 1024, 10, 16, 500)
-    map.buildWorld()
     return JsonResponse({"Working": "Whatup Team Gnarly!!!!!!"}, safe=True)
 
 
