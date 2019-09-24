@@ -21,7 +21,7 @@ class terminalChat():
         "nathan": "password",
         "christian": "password"
     }
-    chatrooms = ["sports", "general", "education", "health", "technology"]
+    chatrooms = ["1"]
 
     ''' The entry point of the application'''
 
@@ -50,15 +50,17 @@ class terminalChat():
     ''' This function is used to select which chatroom you would like to connect to '''
 
     def selectChatroom(self):
-        print(colored("Info! Available chatrooms are %s" %
-                      str(self.chatrooms), "blue"))
-        chatroom = input(colored("Please select a chatroom: ", "green"))
-        if chatroom in self.chatrooms:
-            self.chatroom = chatroom
-            self.initPusher()
-        else:
-            print(colored("No such chatroom in our list", "red"))
-            self.selectChatroom()
+        self.chatroom = '1'
+        self.initPusher()
+        # print(colored("Info! Available chatrooms are %s" %
+        #               str(self.chatrooms), "blue"))
+        # chatroom = input(colored("Please select a chatroom: ", "green"))
+        # if chatroom in self.chatrooms:
+        #     self.chatroom = chatroom
+        #     self.initPusher()
+        # else:
+        #     print(colored("No such chatroom in our list", "red"))
+        #     self.selectChatroom()
 
     ''' This function initialises both the Http server Pusher as well as the clientPusher'''
 
