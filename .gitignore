@@ -126,3 +126,6 @@ dmypy.json
 
 # vscode
 /.vscode/
+
+# new world
+/util/create_world2.py
