@@ -33,7 +33,7 @@ def create_title():
 
 
 class Room(models.Model):
-    title = models.CharField(max_length=50, default=create_title())
+    title = models.CharField(max_length=50, default="DEFAULT DESCRIPTION")
     description = models.CharField(
         max_length=500, default="DEFAULT DESCRIPTION")
 

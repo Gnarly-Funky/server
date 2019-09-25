@@ -29,8 +29,8 @@ def initialize(request):
 def get_world(request):
     final = []
     world = Room.objects.all()
-    print("length", world)
-
+    for room in world:
+        final.append({"x": room.x, "y": room.y})
     return JsonResponse({"world": final}, safe=True)
 
 
