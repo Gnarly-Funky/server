@@ -75,7 +75,7 @@ def create_title():
 #             return
 
 def gen_room(x_val, y_val):
-    room = Room(x=x_val, y=y_val)
+    room = Room(x=x_val, y=y_val, title=create_title())
     return room
 
 

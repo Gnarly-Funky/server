@@ -33,9 +33,10 @@ def create_title():
 
 
 class Room(models.Model):
-    title = models.CharField(max_length=50, default="DEFAULT DESCRIPTION")
+    title = models.CharField(max_length=50, default="DEFAULT TITLE")
     description = models.CharField(
         max_length=500, default="DEFAULT DESCRIPTION")
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
 
     touched = models.BooleanField(default=False)
 

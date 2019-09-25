@@ -30,7 +30,8 @@ def get_world(request):
     final = []
     world = Room.objects.all()
     for room in world:
-        final.append({"x": room.x, "y": room.y})
+        final.append({"id": room.id, "uuid": room.uuid, "title": room.title, "desc": room.description,
+                      "touched": room.touched, "x": room.x, "y": room.y, "north": room.north, "south": room.south, "east": room.east, "west": room.west})
     return JsonResponse({"world": final}, safe=True)
 
 
