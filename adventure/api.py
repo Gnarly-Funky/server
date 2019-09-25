@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-# from pusher import Pusher
-from django.http import JsonResponse
-from decouple import config
-from django.contrib.auth.models import User
-from .models import *
-from rest_framework.decorators import api_view
 import json
+from rest_framework.decorators import api_view
+from .models import *
+from django.contrib.auth.models import User
+from decouple import config
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+# from pusher import Pusher
 
 # instantiate pusher
 # pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
@@ -27,7 +27,7 @@ def initialize(request):
 @csrf_exempt
 @api_view(["GET"])
 def get_world(request):
-    return JsonResponse({"Working": "Whatup Team Gnarly!!!!!!"}, safe=True)
+    pass
 
 
 @csrf_exempt
