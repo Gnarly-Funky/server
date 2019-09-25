@@ -1,5 +1,8 @@
+# from django.contrib.auth.models import User # Comment this back in for production
+# from adventure.models import Player, Room # Comment this back in for production
 from random import randrange, choices
-# from models import Player, Room
+
+# Room.objects.all().delete() # Comment this back in for production
 
 titles = [
     [
@@ -13,63 +16,53 @@ titles = [
     ]
 ]
 
-# TODO
-# front end display algo
-# main images
-# minimap
 
-# Backend todo
-# random descriptions
-# store players in room
-# JSONify new_world
-# figure out sessions stuff
-# write move
-
-# Chat?
-
-
-def gen():
-    str = ""
-    for i in range(3):
-        num = randrange(0, len(titles[i]))
-        if len(str) is 0:
-            str += titles[i][num]
-        elif i == 2:
-            str += " of " + titles[i][num]
-        else:
-            str += " " + titles[i][num]
-    return str
-
-
-class Room():
-    def __init__(self):
-        self.title = gen()
-        self.desc = "asdf"
+# PART ! ---- INSTANTIATE NEW ROOMS IN GAME BOARD
+# Comment this class out for production run
+class Room:
+    def __init__(self, x, y):
+        self.title = self.create_title()
+        self.desc = ""
 
         self.touched = False
+
+        self.x = x
+        self.y = y
 
         self.north = False
         self.south = False
         self.east = False
         self.west = False
 
+    def create_title(self):
+        str = ""
+        for i in range(3):
+            num = randrange(0, len(titles[i]))
+            if len(str) is 0:
+                str += titles[i][num]
+            elif i == 2:
+                str += " of " + titles[i][num]
+            else:
+                str += " " + titles[i][num]
+        return str
 
-new_world = [[Room() for j in range(0, 101)] for i in range(0, 101)]
+    def connectRooms(self, direction):
+        if direction == "north":
+            self.north = True
+        elif direction == "south":
+            self.north = True
+        elif direction == "east":
+            self.east = True
+        elif direction == "west":
+            self.west = True
+        else:
+            print("Invalid direction")
+            return
+        # self.save()
 
-# server sends new_world to client
-# server sends current player position to client
-# server -> client
-#
-# when you move
-# send prev coords
-# send current coords [50,100]
-# pick up an item
-# what item, what coords
-# client -> server
 
-# Generate links starting from
-
-# Odds = [N, S, E, W]
+# Generate Map
+new_world = [[Room(j, i) for j in range(0, 101)] for i in range(0, 101)]
 
 
 def walker(current_place, count, odds=[75, 75, 75, 75]):
@@ -79,13 +72,14 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
 
     if count == 0:
         return
+
     # North
     if rand_num == 0:
         new_odds = [odds[0]+1, odds[1], odds[2], odds[3]]
         if current_place[1] == 0:
             return
-        new_world[current_place[0]][current_place[1]].north = True
-        new_world[current_place[0]][current_place[1]-1].south = True
+        new_world[current_place[0]][current_place[1]].connectRooms("north")
+        new_world[current_place[0]][current_place[1]-1].connectRooms("south")
         walker([current_place[0], current_place[1]-1], count - 1, new_odds)
 
     # South
@@ -94,8 +88,8 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         # Hard coded, change later
         if current_place[1] == len(new_world)-1:
             return
-        new_world[current_place[0]][current_place[1]].south = True
-        new_world[current_place[0]][current_place[1]+1].north = True
+        new_world[current_place[0]][current_place[1]].connectRooms("south")
+        new_world[current_place[0]][current_place[1]+1].connectRooms("north")
         walker([current_place[0], current_place[1]+1], count - 1, new_odds)
 
     # East
@@ -104,8 +98,8 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         # Hard coded, change later
         if current_place[0] == len(new_world)-1:
             return
-        new_world[current_place[0]][current_place[1]].east = True
-        new_world[current_place[0]+1][current_place[1]].west = True
+        new_world[current_place[0]][current_place[1]].connectRooms("east")
+        new_world[current_place[0]+1][current_place[1]].connectRooms("west")
         walker([current_place[0]+1, current_place[1]], count - 1, new_odds)
 
     # West
@@ -113,8 +107,8 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         new_odds = [odds[0], odds[1], odds[2], odds[3]+1]
         if current_place[0] == 0:
             return
-        new_world[current_place[0]][current_place[1]].west = True
-        new_world[current_place[0]-1][current_place[1]].east = True
+        new_world[current_place[0]][current_place[1]].connectRooms("west")
+        new_world[current_place[0]-1][current_place[1]].connectRooms("east")
         walker([current_place[0]-1, current_place[1]], count - 1, new_odds)
 
 
@@ -130,24 +124,3 @@ with open("test.txt", "w") as text:
                 text.write("#")
         text.write("\n")
     text.close()
-
-
-class Player(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    currentRoom = models.IntegerField(default=0)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-
-    def initialize(self):
-        if self.currentRoom == 0:
-            self.currentRoom = Room.objects.first().id
-            self.save()
-
-    def room(self):
-        try:
-            return Room.objects.get(id=self.currentRoom)
-        except Room.DoesNotExist:
-            self.initialize()
-            return self.room()
-
-
-print(Player.objects.all())
