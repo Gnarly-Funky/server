@@ -60,15 +60,10 @@ from random import randrange, choices
 #             print("Invalid direction")
 #             return
 
-def save_room(x, y):
-    room = Room()
-    room.save()
-    room.initialize_room(x, y)
-    return room
-
 
 # Generate Map
-new_world = [[save_room(j, i) for j in range(0, 20)] for i in range(0, 20)]
+new_world = [[Room(j, i) for j in range(0, 20)]
+             for i in range(0, 20)]
 
 
 def walker(current_place, count, odds=[75, 75, 75, 75]):
@@ -78,7 +73,7 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         return None
     # North
     if rand_num == 0:
-        new_odds = [odds[0]+1, odds[1], odds[2], odds[3]]
+        new_odds = [odds[0]+20, odds[1], odds[2]+2, odds[3]+2]
         if current_place[1] == 0:
             return None
         new_world[current_place[0]][current_place[1]].connectRooms("north")
@@ -86,7 +81,7 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         walker([current_place[0], current_place[1]-1], count - 1, new_odds)
     # South
     elif rand_num == 1:
-        new_odds = [odds[0], odds[1]+1, odds[2], odds[3]]
+        new_odds = [odds[0], odds[1]+20, odds[2]+2, odds[3]+2]
         # Hard coded, change later
         if current_place[1] == len(new_world)-1:
             return None
@@ -95,7 +90,7 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         walker([current_place[0], current_place[1]+1], count - 1, new_odds)
     # East
     elif rand_num == 2:
-        new_odds = [odds[0], odds[1], odds[2]+1, odds[3]]
+        new_odds = [odds[0]+1, odds[1]+1, odds[2]+20, odds[3]]
         # Hard coded, change later
         if current_place[0] == len(new_world)-1:
             return None
@@ -104,7 +99,7 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         walker([current_place[0]+1, current_place[1]], count - 1, new_odds)
     # West
     elif rand_num == 3:
-        new_odds = [odds[0], odds[1], odds[2], odds[3]+1]
+        new_odds = [odds[0]+2, odds[1]+2, odds[2], odds[3]+20]
         if current_place[0] == 0:
             return None
         new_world[current_place[0]][current_place[1]].connectRooms("west")
@@ -114,6 +109,11 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
 
 for i in range(0, 20):
     walker([len(new_world)//2, len(new_world)//2], 100)
+
+for i in range(0, len(new_world)):
+    for j in range(0, len(new_world[0])):
+        if new_world[i][j].touched:
+            new_world[i][j].save()
 
 # with open("test.txt", "w") as text:
 #     for i in range(0, len(new_world)):

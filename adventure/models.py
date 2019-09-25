@@ -19,8 +19,21 @@ titles = [
 ]
 
 
+def create_title():
+    str = ""
+    for i in range(3):
+        num = randrange(0, len(titles[i]))
+        if len(str) is 0:
+            str += titles[i][num]
+        elif i == 2:
+            str += " of " + titles[i][num]
+        else:
+            str += " " + titles[i][num]
+    return str
+
+
 class Room(models.Model):
-    title = models.CharField(max_length=50, default="DEFAULT TITLE")
+    title = models.CharField(max_length=50, default=create_title())
     description = models.CharField(
         max_length=500, default="DEFAULT DESCRIPTION")
 
@@ -34,24 +47,6 @@ class Room(models.Model):
     east = models.BooleanField(default=False)
     west = models.BooleanField(default=False)
 
-    def initialize_room(self, x, y):
-        self.title = self.create_title()
-        self.x = x
-        self.y = y
-        self.save()
-
-    def create_title(self):
-        str = ""
-        for i in range(3):
-            num = randrange(0, len(titles[i]))
-            if len(str) is 0:
-                str += titles[i][num]
-            elif i == 2:
-                str += " of " + titles[i][num]
-            else:
-                str += " " + titles[i][num]
-        return str
-
     def connectRooms(self, direction):
         if direction == "north":
             self.north = True
@@ -64,7 +59,6 @@ class Room(models.Model):
         else:
             print("Invalid direction")
             return
-        self.save()
 
     # def playerNames(self, currentPlayerID):
     #     return [p.user.username for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
