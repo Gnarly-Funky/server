@@ -50,14 +50,14 @@ class BigMap:
                                   rect.w - wSplit, rect.h-hSplit)
                 self.RoomList.append(rect4)
                 # update neighbors
-                rect1.eNeighbors.append(rect2)
-                rect1.sNeighbors.append(rect3)
-                rect2.wNeighbors.append(rect1)
-                rect2.sNeighbors.append(rect4)
-                rect3.nNeighbors.append(rect1)
-                rect3.eNeighbors.append(rect4)
-                rect4.wNeighbors.append(rect3)
-                rect4.nNeighbors.append(rect2)
+                rect1.eNeighbors = rect2
+                rect1.sNeighbors = rect3
+                rect2.wNeighbors = rect1
+                rect2.sNeighbors = rect4
+                rect3.nNeighbors = rect1
+                rect3.eNeighbors = rect4
+                rect4.wNeighbors = rect3
+                rect4.nNeighbors = rect2
                 # remove original rect from the list
                 del self.RoomList[index]
         if len(self.RoomList) < self.minRooms:
@@ -65,19 +65,31 @@ class BigMap:
 
         for room in self.RoomList:
             for i in range(room.x, room.x + room.w):
-                self.worldArray[i][room.y] = '#'
-                self.worldArray[i][room.y+room.h - 1] = "#"
+                if room.nNeighbors and i <= (room.nNeighbors.x + room.nNeighbors.w):
+                    self.worldArray[i][room.y] = 'z'
+                else:
+                    self.worldArray[i][room.y] = '#'
+                if room.sNeighbors and i <= (room.sNeighbors.x + room.sNeighbors.w):
+                    self.worldArray[i][room.y+room.h - 1] = 'z'
+                else:
+                    self.worldArray[i][room.y+room.h - 1] = "#"
             for j in range(room.y, room.y + room.h):
-                self.worldArray[room.x][j] = "#"
-                self.worldArray[room.x + room.w - 1][j] = "#"
+                if room.wNeighbors and j <= (room.wNeighbors.x + room.wNeighbors.w):
+                    self.worldArray[room.x][j] = 'z'
+                else:
+                    self.worldArray[room.x][j] = "#"
+                if room.eNeighbors and j <= (room.eNeighbors.x + room.eNeighbors.w):
+                    self.worldArray[room.x + room.w - 1][j] = 'z'
+                else:
+                    self.worldArray[room.x + room.w - 1][j] = "#"
 
-        return self.RoomList
+        # return self.RoomList
 
-#         print('\n'.join([''.join(['{:2}'.format(item)
-#                                   for item in row])for row in self.worldArray]))
-#         print(len(self.RoomList))
+        print('\n'.join([''.join(['{:2}'.format(item)
+                                  for item in row])for row in self.worldArray]))
+        print(len(self.RoomList))
 
 
-# map = BigMap(64, 64, 5, 10, 30)
+map = BigMap(64, 64, 5, 10, 30)
 
-# map.buildWorld()
+map.buildWorld()
