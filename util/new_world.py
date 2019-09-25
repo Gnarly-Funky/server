@@ -1,8 +1,9 @@
-# from django.contrib.auth.models import User # Comment this back in for production
-# from adventure.models import Player, Room # Comment this back in for production
+# Comment this back in for production
+from django.contrib.auth.models import User
+from adventure.models import Player, Room  # Comment this back in for production
 from random import randrange, choices
 
-# Room.objects.all().delete() # Comment this back in for production
+Room.objects.all().delete()  # Comment this back in for production
 
 titles = [
     [
@@ -19,46 +20,45 @@ titles = [
 
 # PART ! ---- INSTANTIATE NEW ROOMS IN GAME BOARD
 # Comment this class out for production run
-class Room:
-    def __init__(self, x, y):
-        self.title = self.create_title()
-        self.desc = ""
+# class Room:
+#     def __init__(self, x, y):
+#         self.title = self.create_title()
+#         self.desc = ""
 
-        self.touched = False
+#         self.touched = False
 
-        self.x = x
-        self.y = y
+#         self.x = x
+#         self.y = y
 
-        self.north = False
-        self.south = False
-        self.east = False
-        self.west = False
+#         self.north = False
+#         self.south = False
+#         self.east = False
+#         self.west = False
 
-    def create_title(self):
-        str = ""
-        for i in range(3):
-            num = randrange(0, len(titles[i]))
-            if len(str) is 0:
-                str += titles[i][num]
-            elif i == 2:
-                str += " of " + titles[i][num]
-            else:
-                str += " " + titles[i][num]
-        return str
+#     def create_title(self):
+#         str = ""
+#         for i in range(3):
+#             num = randrange(0, len(titles[i]))
+#             if len(str) is 0:
+#                 str += titles[i][num]
+#             elif i == 2:
+#                 str += " of " + titles[i][num]
+#             else:
+#                 str += " " + titles[i][num]
+#         return str
 
-    def connectRooms(self, direction):
-        if direction == "north":
-            self.north = True
-        elif direction == "south":
-            self.north = True
-        elif direction == "east":
-            self.east = True
-        elif direction == "west":
-            self.west = True
-        else:
-            print("Invalid direction")
-            return
-        # self.save()
+#     def connectRooms(self, direction):
+#         if direction == "north":
+#             self.north = True
+#         elif direction == "south":
+#             self.north = True
+#         elif direction == "east":
+#             self.east = True
+#         elif direction == "west":
+#             self.west = True
+#         else:
+#             print("Invalid direction")
+#             return
 
 
 # Generate Map
