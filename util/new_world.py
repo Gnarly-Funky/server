@@ -18,8 +18,10 @@ from random import randrange, choices
 # ]
 
 
-# PART ! ---- INSTANTIATE NEW ROOMS IN GAME BOARD
+# PART ! - --- INSTANTIATE NEW ROOMS IN GAME BOARD
 # Comment this class out for production run
+
+
 # class Room:
 #     def __init__(self, x, y):
 #         self.title = self.create_title()
@@ -60,10 +62,14 @@ from random import randrange, choices
 #             print("Invalid direction")
 #             return
 
+def gen_room(x_val, y_val):
+    room = Room(x=x_val, y=y_val)
+    return room
+
 
 # Generate Map
-new_world = [[Room(j, i) for j in range(0, 20)]
-             for i in range(0, 20)]
+new_world = [[gen_room(j, i) for j in range(0, 41)]
+             for i in range(0, 41)]
 
 
 def walker(current_place, count, odds=[75, 75, 75, 75]):
@@ -108,19 +114,24 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
 
 
 for i in range(0, 20):
-    walker([len(new_world)//2, len(new_world)//2], 100)
+    walker([len(new_world)//2, len(new_world)//2], 200)
+
+count = 0
 
 for i in range(0, len(new_world)):
-    for j in range(0, len(new_world[0])):
-        if new_world[i][j].touched:
-            new_world[i][j].save()
+    for j in range(0, len(new_world)):
+        if new_world[j][i].touched:
+            room = new_world[j][i]
+            room.save()
+            count += 1
+            print(count)
 
-# with open("test.txt", "w") as text:
-#     for i in range(0, len(new_world)):
-#         for j in range(0, len(new_world)):
-#             if new_world[j][i].touched:
-#                 text.write(" ")
-#             else:
-#                 text.write("#")
-#         text.write("\n")
-#     text.close()
+with open("test.txt", "w") as text:
+    for i in range(0, len(new_world)):
+        for j in range(0, len(new_world)):
+            if new_world[j][i].touched:
+                text.write(" ")
+            else:
+                text.write("#")
+        text.write("\n")
+    text.close()
