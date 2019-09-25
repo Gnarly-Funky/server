@@ -38,7 +38,7 @@ def get_world(request):
 
 
 @csrf_exempt
-@api_view(["GET"])
+@api_view(["POST"])
 def move(request):
     # player = request.user.player
     return JsonResponse({"new_room": "working"}, safe=True)
