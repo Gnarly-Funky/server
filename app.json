@@ -1,0 +1,7 @@
+{
+  "name": "Gnarly Funky Server",
+  "description": "The server for the Gnarly Funky CS team's build week MUD game",
+  "repository": "https://github.com/Gnarly-Funky/server",
+  "logo": "",
+  "_comment": "This file is used to house the data used in the README.md Heroku button"
+}
