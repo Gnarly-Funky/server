@@ -61,8 +61,9 @@ from random import randrange, choices
 #             return
 
 def save_room(x, y):
-    room = Room(x, y)
+    room = Room()
     room.save()
+    room.initialize_room(x, y)
     return room
 
 

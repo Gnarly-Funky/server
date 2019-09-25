@@ -34,10 +34,11 @@ class Room(models.Model):
     east = models.BooleanField(default=False)
     west = models.BooleanField(default=False)
 
-    def __init__(self, x=0, y=0):
+    def initialize_room(self, x, y):
         self.title = self.create_title()
         self.x = x
         self.y = y
+        self.save()
 
     def create_title(self):
         str = ""
