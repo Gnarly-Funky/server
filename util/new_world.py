@@ -115,12 +115,12 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
 for i in range(0, 20):
     walker([len(new_world)//2, len(new_world)//2], 500)
 
-with open("test.txt", "w") as text:
-    for i in range(0, len(new_world)):
-        for j in range(0, len(new_world)):
-            if new_world[j][i].touched:
-                text.write(" ")
-            else:
-                text.write("#")
-        text.write("\n")
-    text.close()
+# with open("test.txt", "w") as text:
+#     for i in range(0, len(new_world)):
+#         for j in range(0, len(new_world)):
+#             if new_world[j][i].touched:
+#                 text.write(" ")
+#             else:
+#                 text.write("#")
+#         text.write("\n")
+#     text.close()
