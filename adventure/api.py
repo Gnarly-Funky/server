@@ -27,7 +27,11 @@ def initialize(request):
 @csrf_exempt
 @api_view(["GET"])
 def get_world(request):
-    pass
+    final = []
+    world = Room.objects.all()
+    for room in world:
+        final.append({"x": room.x, "y": room.y})
+    return JsonResponse({"world": final}, safe=True)
 
 
 @csrf_exempt
