@@ -3,19 +3,19 @@ from django.contrib.auth.models import User
 from adventure.models import Player, Room  # Comment this back in for production
 from random import randrange, choices
 
-Room.objects.all().delete()  # Comment this back in for production
+# Room.objects.all().delete()  # Comment this back in for production
 
-titles = [
-    [
-        "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Lost", "Black", "Dark", "Grand", "Narrow", "Lost", "Forsaken", "Gauntlet", "Mighty", "Tormented", "Demented", "Brick", "Rusty", "Decaying", "Reeking"
-    ],
-    [
-        "Great Room", "Alter", "Hallway", "Chamber", "Cavern", "Expanse", "Overlook", "Foyer", "Library", "Laboratory", "Crypt", "Catacombs", "Archway", "Shrine", "Sanctum", "Lair", "Temple", "Halls", "Cave", "Divide", "Quicksand", "Realm"
-    ],
-    [
-        "Death", "Annihiliation", "Torture", "Tranquility", "Secrets", "Chaos", "Desecration", "Blood", "Destruction", "Despair", "Ascendance", "Mortality"
-    ]
-]
+# titles = [
+#     [
+#         "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Lost", "Black", "Dark", "Grand", "Narrow", "Lost", "Forsaken", "Gauntlet", "Mighty", "Tormented", "Demented", "Brick", "Rusty", "Decaying", "Reeking"
+#     ],
+#     [
+#         "Great Room", "Alter", "Hallway", "Chamber", "Cavern", "Expanse", "Overlook", "Foyer", "Library", "Laboratory", "Crypt", "Catacombs", "Archway", "Shrine", "Sanctum", "Lair", "Temple", "Halls", "Cave", "Divide", "Quicksand", "Realm"
+#     ],
+#     [
+#         "Death", "Annihiliation", "Torture", "Tranquility", "Secrets", "Chaos", "Desecration", "Blood", "Destruction", "Despair", "Ascendance", "Mortality"
+#     ]
+# ]
 
 
 # PART ! ---- INSTANTIATE NEW ROOMS IN GAME BOARD
@@ -60,9 +60,14 @@ titles = [
 #             print("Invalid direction")
 #             return
 
+def save_room(x, y):
+    room = Room(x, y)
+    room.save()
+    return room
+
 
 # Generate Map
-new_world = [[Room(j, i) for j in range(0, 101)] for i in range(0, 101)]
+new_world = [[save_room(j, i) for j in range(0, 101)] for i in range(0, 101)]
 
 
 def walker(current_place, count, odds=[75, 75, 75, 75]):
