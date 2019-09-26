@@ -133,23 +133,23 @@
       //get the currently typed message
       var message = $("#btn-input").val();
 
-      jQuery.ajax({
-        type: "POST",
-        url: "/ajax/chat/",
-        contentType: "application/json",
-        data: { message: message, csrfmiddlewaretoken: "{{ csrf_token }}" },
-        dataType: "json"
-      });
-
-      //   $.post({
+      //   jQuery.ajax({
+      //     type: "POST",
       //     url: "/ajax/chat/",
-      //     data: {
-      //       message: message
-      //     },
-      //     success: function(data) {
-      //       $("#btn-input").val("");
-      //     }
+      //     contentType: "application/json",
+      //     data: { message: message, csrfmiddlewaretoken: "{{ csrf_token }}" },
+      //     dataType: "json"
       //   });
+
+      $.post({
+        url: "/ajax/chat/",
+        data: {
+          message: message
+        },
+        success: function(data) {
+          $("#btn-input").val("");
+        }
+      });
     });
   });
 </script>

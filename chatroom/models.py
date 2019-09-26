@@ -1,4 +1,5 @@
 from django.db import models
+# TESTING PUSHER
 # import pusher
 
 # channels_client = pusher.Pusher(
