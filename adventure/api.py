@@ -31,7 +31,7 @@ def initialize(request):
         if p.currentRoom == player.currentRoom:
             if p.id != player_id:
                 other_players.append(p.user.username)
-    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, 'room_title': room.title, 'room_description': room.description, "other_players": other_players}, safe=True)
+    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, "room_x": room.x, "room_y": room.y, 'room_title': room.title, 'room_description': room.description, "other_players": other_players}, safe=True)
 
 
 @csrf_exempt
