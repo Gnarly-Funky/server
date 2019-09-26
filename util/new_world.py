@@ -7,7 +7,7 @@ from random import randrange, choices
 
 titles = [
     [
-        "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Black", "Dark", "Grand", "Lost", "Forsaken", "Tormented", "Demented", "Rusty", "Decaying", "Reeking"
+        "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Black", "Dark", "Grand", "Lost", "Forsaken", "Demented", "Rusty", "Decaying", "Reeking"
     ],
     [
         "Great Room", "Altar", "Hallway", "Chamber", "Cavern", "Expanse", "Overlook", "Library", "Laboratory", "Crypt", "Catacombs", "Shrine", "Sanctum", "Lair", "Temple", "Halls", "Cave"
