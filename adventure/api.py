@@ -4,12 +4,14 @@ from .models import *
 from django.contrib.auth.models import User
 from decouple import config
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-# from pusher import Pusher
+from pusher import Pusher
+
 
 # instantiate pusher
-# pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
+pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
 
 
 @csrf_exempt
@@ -65,4 +67,6 @@ def move(request):
 @api_view(["POST"])
 def say(request):
     # IMPLEMENT
-    return JsonResponse({'error': "Not yet implemented"}, safe=True, status=500)
+    pusher.trigger(u'a_channel', u'an_event', {u'name': request.user.username, u'message': request.POST['message']})
+    return HttpResponse("done");
+    # return JsonResponse({'error': "Not yet implemented"}, safe=True, status=500)

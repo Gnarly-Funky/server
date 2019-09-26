@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'adventure',
     'api',
-    'chatroom',
+    'pusherchat',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
