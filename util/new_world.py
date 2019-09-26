@@ -80,7 +80,7 @@ def gen_room(x_val, y_val):
 
 
 # Generate Map
-new_world = [[gen_room(j, i) for j in range(0, 41)]
+new_world = [[gen_room(i, j) for j in range(0, 41)]
              for i in range(0, 41)]
 
 
@@ -108,7 +108,7 @@ def walker(current_place, count, odds=[75, 75, 75, 75]):
         walker([current_place[0], current_place[1]+1], count - 1, new_odds)
     # East
     elif rand_num == 2:
-        new_odds = [odds[0]+1, odds[1]+1, odds[2]+20, odds[3]]
+        new_odds = [odds[0]+2, odds[1]+2, odds[2]+20, odds[3]]
         # Hard coded, change later
         if current_place[0] == len(new_world)-1:
             return None
