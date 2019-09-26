@@ -25,22 +25,26 @@ descriptions = [
         "You're in a massive room. Each footsteps echo off distant walls.", "There's an altar in the room, covered in symbols you can't read and idols you don't recognize.", "You're in a hallway, most doors are blocked.", "You've entered a large chambers, filled wall to wall with seating. It must have been used for grand debates.", "Your surroundings don't resemble those of a room. There are stalactites hanging from the ceiling, as if you're in a cavern.", "You've entered an absolutely massive room. It reaches out in every direction.", "You're on an overarching balcony that looks down on a great arena.", "The smell of old paper fills the room, and rows of bookshelves neatly go from wall to wall.", "Beakers and burners litter a series of desks. Terrifying experiments sit inside jars on shelves.", "The room is lined with stone coffins, each engraved with names in an unknown language.", "The walls themselves hold countless graves, each marked with the names of the dead.", "In the center of the room stands a grand statue of an ancient goddess.", "The room is peaceful. You get the feeling that all is right in the world.", "A serpentene decoration addorns the room. Gold and treasure is piled in the corner.", "A broken altar sits in the corner. Melted and lit candles line the walls.", "You've entered a series of halls. Most doors are blocked.", "Your surroundings don't resemble those of a room. There are stalactites hanging from the ceiling, as if you're in a cave."
     ],
     [
-        "Death", "Annihiliation", "Torture", "Tranquility", "Secrets", "Chaos", "Desecration", "Blood", "Destruction", "Despair", "Ascendance", "Mortality"
+        "A feeling of death hangs over the room, and decaying bodies lie in the corner.", "An oppressive feeling of the annihilation comes over you.", "A rack and stretching tools sit in the corner next to a pile of bones.", "An inner peace settles over you.", "There is a massive X in the middle of the room. Echoes of ancient secrets bounce off the walls.", "You find it hard to think. Which way was out, again?", "Angry red writing covers the walls, and the adornments seem out of place.", "There is blood splattered around the room.", "The ground is broken up beneath your feet.", "You begin to feel despair that this is all you'll ever know.'", "Soft choir chanting drifts down from somewhere.", "The oppressive air feeds your feeling of impending doom."
     ]
 ]
 
 
-def create_title():
-    str = ""
+def create_info():
+    title = ""
+    desc = ""
     for i in range(3):
         num = randrange(0, len(titles[i]))
-        if len(str) is 0:
-            str += titles[i][num]
+        if len(title) is 0:
+            title += titles[i][num]
+            desc += descriptions[i][num]
         elif i == 2:
-            str += " of " + titles[i][num]
+            title += " of " + titles[i][num]
+            desc += " " + descriptions[i][num]
         else:
-            str += " " + titles[i][num]
-    return str
+            title += " " + titles[i][num]
+            desc = descriptions[i][num] + " " + desc
+    return [title, desc]
 
 # PART ! - --- INSTANTIATE NEW ROOMS IN GAME BOARD
 # Comment this class out for production run
@@ -87,7 +91,9 @@ def create_title():
 #             return
 
 def gen_room(x_val, y_val):
-    room = Room(x=x_val, y=y_val, title=create_title())
+    title_desc = create_info()
+    room = Room(x=x_val, y=y_val,
+                title=title_desc[0], description=title_desc[1])
     return room
 
 
