@@ -98,12 +98,14 @@
 
 <script>
   //initiate puhser with your application key
-  var pusher = new Pusher("fbd19071de68cf6b0460");
+  var pusher = new Pusher("fbd19071de68cf6b0460", {
+    cluster: "us3",
+    forceTLS: true
+  });
   //subscribe to the channel you want to listen to
   var my_channel = pusher.subscribe("a_channel");
   //wait for an event to be triggered in that channel
   my_channel.bind("an_event", function(data) {
-    console.log("hi");
     // declare a variable new_message to hold the new chat messages
     var new_message =
       `<li class="left clearfix"><span class="chat-img pull-left">
@@ -125,7 +127,6 @@
                             </div>
                         </li>`;
     //append the new message to the ul holding the chat messages
-    console.log(new_message);
 
     $("#chat").append(new_message);
   });

@@ -16,7 +16,6 @@ pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret
 #login required to access this page. will redirect to admin login page.
 @login_required(login_url='/admin/login/')
 def chat(request):
-    print('logged in and in the chat')
     return render(request,"chat.html");
 
 # Don't need it, it's in api.py as the say function
