@@ -23,7 +23,7 @@ def initialize(request):
     player_id = player.id
     uuid = player.uuid
     room = Room.objects.get(id=player.currentRoom)
-    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, 'room_title': room.title, 'room_description': room.description}, safe=True)
+    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, 'room_title': room.title, 'room_description': room.description}, safe=True)
 
 
 @csrf_exempt
@@ -40,40 +40,17 @@ def get_world(request):
 @csrf_exempt
 @api_view(["POST"])
 def move(request):
-    # player = request.user.player
-    return JsonResponse({"new_room": "working"}, safe=True)
-    # dirs = {"n": "north", "s": "south", "e": "east", "w": "west"}
-    # reverse_dirs = {"n": "south", "s": "north", "e": "west", "w": "east"}
-    # player = request.user.player
-    # player_id = player.id
-    # player_uuid = player.uuid
-    # data = json.loads(request.body)
-    # direction = data['direction']
-    # room = player.room()
-    # nextRoomID = None
-    # if direction == "n":
-    #     nextRoomID = room.n_to
-    # elif direction == "s":
-    #     nextRoomID = room.s_to
-    # elif direction == "e":
-    #     nextRoomID = room.e_to
-    # elif direction == "w":
-    #     nextRoomID = room.w_to
-    # if nextRoomID is not None and nextRoomID > 0:
-    #     nextRoom = Room.objects.get(id=nextRoomID)
-    #     player.currentRoom = nextRoomID
-    #     player.save()
-    #     players = nextRoom.playerNames(player_id)
-    #     currentPlayerUUIDs = room.playerUUIDs(player_id)
-    #     nextPlayerUUIDs = nextRoom.playerUUIDs(player_id)
-    # for p_uuid in currentPlayerUUIDs:
-    #     pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'message':f'{player.user.username} has walked {dirs[direction]}.'})
-    # for p_uuid in nextPlayerUUIDs:
-    #     pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'message':f'{player.user.username} has entered from the {reverse_dirs[direction]}.'})
-    #     return JsonResponse({'name': player.user.username, 'title': nextRoom.title, 'description': nextRoom.description, 'players': players, 'error_msg': ""}, safe=True)
-    # else:
-    #     players = room.playerNames(player_id)
-    #     return JsonResponse({'name': player.user.username, 'title': room.title, 'description': room.description, 'players': players, 'error_msg': "You cannot move that way."}, safe=True)
+    data = json.loads(request.body)
+    current_player = Player.objects.get(uuid=request.user.player.uuid)
+    current_player.currentRoom = data["room_id"]
+    current_player.save()
+    other_players = []
+    players = Player.objects.all()
+    for p in players:
+        if p.currentRoom == current_player.currentRoom:
+            if p.id != current_player.id:
+                other_players.append(p.user.username)
+    return JsonResponse({"new_room": current_player.currentRoom, "other_players": other_players}, safe=True)
 
 
 @csrf_exempt
