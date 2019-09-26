@@ -66,7 +66,8 @@ def move(request):
 def say(request):
     # IMPLEMENT
     print('in the say')
-    print(User)
+    print(request.headers)
+    print(request.body)
     print(request.user)
     print(request.data['message'])
     print('request user', request.user)
