@@ -52,7 +52,7 @@ class Room(models.Model):
         if direction == "north":
             self.north = True
         elif direction == "south":
-            self.north = True
+            self.south = True
         elif direction == "east":
             self.east = True
         elif direction == "west":
