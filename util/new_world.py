@@ -7,10 +7,22 @@ from random import randrange, choices
 
 titles = [
     [
-        "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Lost", "Black", "Dark", "Grand", "Narrow", "Lost", "Forsaken", "Gauntlet", "Mighty", "Tormented", "Demented", "Brick", "Rusty", "Decaying", "Reeking"
+        "Cloudy", "Dusty", "Warm", "Crumbling", "Dank", "Musty", "Moldy", "Funerial", "Dread", "Black", "Dark", "Grand", "Lost", "Forsaken", "Tormented", "Demented", "Rusty", "Decaying", "Reeking"
     ],
     [
-        "Great Room", "Alter", "Hallway", "Chamber", "Cavern", "Expanse", "Overlook", "Foyer", "Library", "Laboratory", "Crypt", "Catacombs", "Archway", "Shrine", "Sanctum", "Lair", "Temple", "Halls", "Cave", "Divide", "Quicksand", "Realm"
+        "Great Room", "Altar", "Hallway", "Chamber", "Cavern", "Expanse", "Overlook", "Library", "Laboratory", "Crypt", "Catacombs", "Shrine", "Sanctum", "Lair", "Temple", "Halls", "Cave"
+    ],
+    [
+        "Death", "Annihiliation", "Torture", "Tranquility", "Secrets", "Chaos", "Desecration", "Blood", "Destruction", "Despair", "Ascendance", "Mortality"
+    ]
+]
+
+descriptions = [
+    [
+        "Beams of light pierce through the clouds of dirt and dust lingering in the air.", "Every surface is covered in a thick layer of dust and grime.", "The warm air feels like it's sticking to your skin.", "The surface of the walls is chipping away.", "The room is oppressively humid, making it hard to breathe.", "A musty smell permeates the air around you.", "The smell of mold and mildew lingers in the air.", "The surroundings are adorned with offerings and honorific art, as if in preparation for a wake.", "You feel as though there's an ominous aura about this place.", "There's almost no light here. Everything is covered in black drapery.", "The room is filled with shadows, making it difficult to tell what you're looking at.", "The scale and adornment of this room is beyond anything you've seen before.", "This room looks as though it hasn't been used for anything in decades.", "It's as though this room hasn't been used in centuries.", "The room is filled with terrifying idols and symbols.", "The room is filled with ancient armor and weapons, all of them forgotten and slowly rusting away.", "It's as if the room itself is rotting away. The furniture, walls, floor, and everything else is falling to pieces.", "You have to hold your nose as soon as you enter. The stench in this room is overwhelming."
+    ],
+    [
+        "You're in a massive room. Each footsteps echo off distant walls.", "There's an altar in the room, covered in symbols you can't read and idols you don't recognize.", "You're in a hallway, most doors are blocked.", "You've entered a large chambers, filled wall to wall with seating. It must have been used for grand debates.", "Your surroundings don't resemble those of a room. There are stalactites hanging from the ceiling, as if you're in a cavern.", "You've entered an absolutely massive room. It reaches out in every direction.", "You're on an overarching balcony that looks down on a great arena.", "The smell of old paper fills the room, and rows of bookshelves neatly go from wall to wall.", "Beakers and burners litter a series of desks. Terrifying experiments sit inside jars on shelves.", "The room is lined with stone coffins, each engraved with names in an unknown language.", "The walls themselves hold countless graves, each marked with the names of the dead.", "In the center of the room stands a grand statue of an ancient goddess.", "The room is peaceful. You get the feeling that all is right in the world.", "A serpentene decoration addorns the room. Gold and treasure is piled in the corner.", "A broken altar sits in the corner. Melted and lit candles line the walls.", "You've entered a series of halls. Most doors are blocked.", "Your surroundings don't resemble those of a room. There are stalactites hanging from the ceiling, as if you're in a cave."
     ],
     [
         "Death", "Annihiliation", "Torture", "Tranquility", "Secrets", "Chaos", "Desecration", "Blood", "Destruction", "Despair", "Ascendance", "Mortality"
