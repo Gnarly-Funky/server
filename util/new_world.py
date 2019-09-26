@@ -147,3 +147,9 @@ for i in range(0, len(new_world)):
 #                 text.write("#")
 #         text.write("\n")
 #     text.close()
+
+players = Player.objects.all()
+for p in players:
+    root_room = new_world[len(new_world)//2, len(new_world)//2]
+    p.currentRoom = root_room.uuid
+    p.save()
