@@ -67,6 +67,6 @@ def move(request):
 @api_view(["POST"])
 def say(request):
     # IMPLEMENT
-    pusher.trigger(u'a_channel', u'an_event', {u'name': request.user.username, u'message': request.POST['message']})
+    pusher.trigger(u'a_channel', u'an_event', {u'name': request.user.username, u'message': request.data["message"]})
     return HttpResponse("done");
     # return JsonResponse({'error': "Not yet implemented"}, safe=True, status=500)
