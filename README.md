@@ -18,7 +18,7 @@ This repository contains the server for the Gnarly Funky build week team. This D
   - [Init](#init)
   - [World](#world)
   - [Move](#move)
-- [Project Management](#project-management)
+- [Data Structures](#data-structures)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -69,7 +69,7 @@ _HTTP method:_ **[POST]**
 
 _example:_
 
-```
+```json
 {
   "username": "mcfly",
   "password1": "wehavetogoback",
@@ -83,7 +83,7 @@ _example:_
 
 > If you successfully register, the endpoint will return an HTTP response with a status code `200` and a body as below.
 
-```
+```json
 {
   "key": "4f5d1b80619c3851e382f34a1d67efdc03c68192639"
 }
@@ -93,17 +93,11 @@ _example:_
 
 > If you either try to register with an existing username or submit two passwords that do not match, you will receive a `400` status code and a body that might selectively contain any of the fields below:
 
-```
+```json
 {
-  "username": [
-    "A user with that username already exists."
-  ],
-  "password1": [
-    "This password is too common."
-  ],
-  "password2": [
-    "This field is required."
-  ]
+  "username": ["A user with that username already exists."],
+  "password1": ["This password is too common."],
+  "password2": ["This field is required."]
 }
 ```
 
@@ -130,7 +124,7 @@ _HTTP method:_ **[POST]**
 
 _example:_
 
-```
+```json
 {
   "username": "mcfly",
   "password": "wehavetogoback"
@@ -143,27 +137,25 @@ _example:_
 
 > If you successfully login, the endpoint will return an HTTP response with a status code `200` and a body as below.
 
-```
+```json
 {
   "key": "4f5d1b80619c3851e382f34a1d67efdc03c68192639"
 }
 ```
 
-##### 401 (Bad Request)
+##### 401 (Unauthorized)
 
 > If you are missing a username or password for login, the endpoint will return an HTTP response with a status code `400` and a body as below.
 
-```
+```json
 {
-  "non_field_errors": [
-    "Unable to log in with provided credentials."
-  ]
+  "non_field_errors": ["Unable to log in with provided credentials."]
 }
 ```
 
 ## **INIT**
 
-### **Servers up initial server data**
+### **Serves up initial server data**
 
 _Method Url:_ `/api/adv/init/`
 
@@ -177,7 +169,13 @@ _HTTP method:_ **[GET]**
 
 #### Body
 
-_None_ - The logged in player is automatically pulled from the cookie and used to return data.
+> You must send a header with the following in it:
+
+```json
+{
+  "authorization": "Token 4f5d1b80619c3851e382f34a1d67efdc03c68192639"
+}
+```
 
 #### Response
 
@@ -185,7 +183,7 @@ _None_ - The logged in player is automatically pulled from the cookie and used t
 
 > If you successfully hit this endpoint, it will return the initial starting data for the user.
 
-```
+```json
 {
   "player_uuid": "6720e123-53af-4c1d-9305-8asdfc7d842998",
   "room_uuid": "343sdf67-5cb1-4e0c-8c44-bb04a1a7f62a",
@@ -197,21 +195,200 @@ _None_ - The logged in player is automatically pulled from the cookie and used t
 }
 ```
 
-##### 400 (Bad Request)
+##### 401 (Unauthorized)
 
-> If you
+> If you are missing an authorization token, the endpoint will return an HTTP response with a status code `400` and a body as below.
 
-```
+```json
 {
-  "non_field_errors": [
-    "Unable to log in with provided credentials."
+  "non_field_errors": ["Unable to log in with provided credentials."]
+}
+```
+
+## **WORLD**
+
+### **Serves up initial world data**
+
+_Method Url:_ `/api/adv/world/`
+
+_HTTP method:_ **[GET]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+
+#### Body
+
+> You must send a header with the following in it:
+
+```json
+{
+  "authorization": "Token 4f5d1b80619c3851e382f34a1d67efdc03c68192639"
+}
+```
+
+##### 200 (OK)
+
+> If you successfully hit this endpoint, it will return the initial starting world data.
+
+```json
+[
+  {
+    id: 2365,
+    uuid: "bba66a41-be85-4822-b914-f35cf0bcaf0f",
+    title: "Lost Chamber of Chaos",
+    desc:
+      "You've entered a large chambers, filled wall to wall with seating. It must have been used for grand debates. This room looks as though it hasn't been used for anything in decades. You find it hard to think. Which way was out, again?",
+    touched: true,
+    x: 23,
+    y: 0,
+    north: false,
+    south: true,
+    east: false,
+    west: false
+  },
+  {
+    id: 2366,
+    uuid: "67b1dff8-7670-48b7-b4e9-ce05dcba640b",
+    title: "Musty Great Room of Ascendance",
+    desc:
+      "You're in a massive room. Each footsteps echo off distant walls. A musty smell permeates the air around you. Soft choir chanting drifts down from somewhere.",
+    touched: true,
+    x: 23,
+    y: 1,
+    north: true,
+    south: true,
+    east: false,
+    west: false
+  },
+  {
+    id: 2367,
+    uuid: "6bdd9655-c5ad-46e3-bf15-6433b42b8211",
+    title: "Black Shrine of Ascendance",
+    desc:
+      "In the center of the room stands a grand statue of an ancient goddess. There's almost no light here. Everything is covered in black drapery. Soft choir chanting drifts down from somewhere.",
+    touched: true,
+    x: 23,
+    y: 2,
+    north: true,
+    south: false,
+    east: true,
+    west: false
+  }
+];
+```
+
+##### 401 (Unauthorized)
+
+> If you are missing an authorization token, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```json
+{
+  "non_field_errors": ["Unable to log in with provided credentials."]
+}
+```
+
+## **MOVE**
+
+### **Allows the player to move around the world map**
+
+_Method Url:_ `/api/adv/move/`
+
+_HTTP method:_ **[GET]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+
+#### Body
+
+> You must send a header with the following in it:
+
+```json
+{
+  "authorization": "Token 4f5d1b80619c3851e382f34a1d67efdc03c68192639"
+}
+```
+
+> You must also send a body with a `room_id` number in it:
+
+```json
+{
+  "room_id": 1567
+}
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully hit this endpoint, it will return the `room_id` back along with data about placement of other users on the world map.
+
+```json
+{
+  "new_room": 2674,
+  "other_players": [
+    {
+      "username": "xxx360_no_scopexxx",
+      "room_x": 21,
+      "room_y": 7
+    },
+    {
+      "username": "killer_sword",
+      "room_x": 20,
+      "room_y": 20
+    },
+    {
+      "username": "thomasnw",
+      "room_x": 23,
+      "room_y": 0
+    },
+    {
+      "username": "johnnyboy",
+      "room_x": 23,
+      "room_y": 15
+    },
+    {
+      "username": "GyorgLopez",
+      "room_x": 20,
+      "room_y": 24
+    },
+    {
+      "username": "derp70",
+      "room_x": 25,
+      "room_y": 16
+    },
+    {
+      "username": "littlebillybob",
+      "room_x": 20,
+      "room_y": 20
+    }
   ]
 }
 ```
 
-## PROJECT MANAGEMENT
+##### 401 (Unauthorized)
 
-We used [Trello](https://trello.com/) to manage our project. Our Kanban board in it can be found [here](https://trello.com/invite/accept-board).
+> If you are missing an authorization token, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```json
+{
+  "non_field_errors": ["Unable to log in with provided credentials."]
+}
+```
+
+## DATA STRUCTURES
+
+Our data modeling for our world uses a combination of the following two data structures:
+
+1. Matrix
+2. Linked List
+
+We build our world using a 2D matrix with `x` and `y` coordinates. However, each nodes contains references to whether or not you can head in a north, south, east, or west direction. The combination of these two data structures gives us the power of a linked list with the `O(1)` lookup time that a matrix of `x` and `y` points affords us.
 
 ## LICENSE
 
