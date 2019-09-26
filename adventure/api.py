@@ -25,10 +25,11 @@ def initialize(request):
     room = Room.objects.get(id=player.currentRoom)
     other_players = []
     players = Player.objects.all()
-    for p in players:
-        if p.currentRoom == player.currentRoom:
-            if p.id != player_id:
-                other_players.append(p.user.username)
+    all_rooms = Room.objects.all()
+    for r in all_rooms:
+        for p in players:
+            if p.currentRoom == r.id:
+                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y})
     return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, "room_x": room.x, "room_y": room.y, 'room_title': room.title, 'room_description': room.description, "other_players": other_players}, safe=True)
 
 
@@ -52,10 +53,11 @@ def move(request):
     current_player.save()
     other_players = []
     players = Player.objects.all()
+    all_rooms = Room.objects.all()
     for p in players:
-        if p.currentRoom == current_player.currentRoom:
-            if p.id != current_player.id:
-                other_players.append(p.user.username)
+        for r in all_rooms:
+            if p.currentRoom == r.id:
+                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y})
     return JsonResponse({"new_room": current_player.currentRoom, "other_players": other_players}, safe=True)
 
 
