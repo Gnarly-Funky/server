@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'adventure',
     'api',
     'chatroom',
+    'pusherchat',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
