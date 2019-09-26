@@ -15,6 +15,9 @@ This repository contains the server for the Gnarly Funky build week team. This D
 - [API Endpoints](#api-examples)
   - [Login](#login)
   - [Registration](#registration)
+  - [Init](#init)
+  - [World](#world)
+  - [Move](#move)
 - [Project Management](#project-management)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -146,9 +149,57 @@ _example:_
 }
 ```
 
-##### 400 (Bad Request)
+##### 401 (Bad Request)
 
 > If you are missing a username or password for login, the endpoint will return an HTTP response with a status code `400` and a body as below.
+
+```
+{
+  "non_field_errors": [
+    "Unable to log in with provided credentials."
+  ]
+}
+```
+
+## **INIT**
+
+### **Servers up initial server data**
+
+_Method Url:_ `/api/adv/init/`
+
+_HTTP method:_ **[GET]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+
+#### Body
+
+_None_ - The logged in player is automatically pulled from the cookie and used to return data.
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully hit this endpoint, it will return the initial starting data for the user.
+
+```
+{
+  "player_uuid": "6720e123-53af-4c1d-9305-8asdfc7d842998",
+  "room_uuid": "343sdf67-5cb1-4e0c-8c44-bb04a1a7f62a",
+  "player_id": 1,
+  "player_name": "docbrown",
+  "room_id": 1414,
+  "room_title": "Musty Cave of Death",
+  "room_description": "Marty, we have to go back!"
+}
+```
+
+##### 400 (Bad Request)
+
+> If you
 
 ```
 {
