@@ -23,7 +23,13 @@ def initialize(request):
     player_id = player.id
     uuid = player.uuid
     room = Room.objects.get(id=player.currentRoom)
-    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, 'room_title': room.title, 'room_description': room.description}, safe=True)
+    other_players = []
+    players = Player.objects.all()
+    for p in players:
+        if p.currentRoom == player.currentRoom:
+            if p.id != player_id:
+                other_players.append(p.user.username)
+    return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, 'room_title': room.title, 'room_description': room.description, "other_players": other_players}, safe=True)
 
 
 @csrf_exempt
