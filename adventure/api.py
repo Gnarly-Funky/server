@@ -11,7 +11,8 @@ from pusher import Pusher
 
 
 # instantiate pusher
-pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config('PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
+pusher = Pusher(app_id=config('PUSHER_APP_ID'), key=config(
+    'PUSHER_KEY'), secret=config('PUSHER_SECRET'), cluster=config('PUSHER_CLUSTER'))
 
 
 @csrf_exempt
@@ -28,10 +29,9 @@ def initialize(request):
     other_players = []
     players = Player.objects.all()
     all_rooms = Room.objects.all()
-    for r in all_rooms:
-        for p in players:
-            if p.currentRoom == r.id:
-                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y})
+    for p in players:
+        if p.currentRoom == player.currentRoom and p.id is not player.id:
+            other_players.append({"username": p.user.username})
     return JsonResponse({'player_uuid': uuid, "room_uuid": room.uuid, "player_id": player_id, 'player_name': player.user.username, "room_id": room.id, "room_x": room.x, "room_y": room.y, 'room_title': room.title, 'room_description': room.description, "other_players": other_players}, safe=True)
 
 
@@ -57,9 +57,8 @@ def move(request):
     players = Player.objects.all()
     all_rooms = Room.objects.all()
     for p in players:
-        for r in all_rooms:
-            if p.currentRoom == r.id:
-                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y, "room_id": r.id})
+        if p.currentRoom == current_player.currentRoom and p.id is not current_player.id:
+            other_players.append({"username": p.user.username})
     return JsonResponse({"new_room": current_player.currentRoom, "other_players": other_players}, safe=True)
 
 
@@ -68,6 +67,7 @@ def move(request):
 def say(request):
     # IMPLEMENT
     print(request.user)
-    pusher.trigger(u'a_channel', u'an_event', {u'name': request.data["username"], u'message': request.data["message"]})
-    return HttpResponse("done");
+    pusher.trigger(u'a_channel', u'an_event', {
+                   u'name': request.data["username"], u'message': request.data["message"]})
+    return HttpResponse("done")
     # return JsonResponse({'error': "Not yet implemented"}, safe=True, status=500)
