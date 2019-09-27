@@ -59,7 +59,7 @@ def move(request):
     for p in players:
         for r in all_rooms:
             if p.currentRoom == r.id:
-                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y})
+                other_players.append({"username": p.user.username, "room_x": r.x, "room_y": r.y, "room_id": r.id})
     return JsonResponse({"new_room": current_player.currentRoom, "other_players": other_players}, safe=True)
 
 
